@@ -1,50 +1,14 @@
-export const videos = [
+import mongoose from "mongoose";
+
+mongoose.connect("mongodb://localhost:27017/webtube",
     {
-        id: 324393,
-        title: "Video awesome",
-        description: "This is something I love",
-        views: 24,
-        videoFile: "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
-        creator: {
-            id: 121212,
-            name: "Nicolas",
-            email: "nico@las.com"
-        }
-    },
-    {
-        id: 1212121,
-        title: "Video super",
-        description: "This is something I love",
-        views: 24,
-        videoFile: "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
-        creator: {
-            id: 121212,
-            name: "Nicolas",
-            email: "nico@las.com"
-        }
-    },
-    {
-        id: 55555,
-        title: "Video nice",
-        description: "This is something I love",
-        views: 24,
-        videoFile: "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
-        creator: {
-            id: 121212,
-            name: "Nicolas",
-            email: "nico@las.com"
-        }
-    },
-    {
-        id: 11111,
-        title: "Video perfect",
-        description: "This is something I love",
-        views: 24,
-        videoFile: "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
-        creator: {
-            id: 121212,
-            name: "Nicolas",
-            email: "nico@las.com"
-        }
-    }
-];
+        useNewUrlParser: true,
+        useFindAndModify: false
+    });
+
+const db = mongoose.connection;
+
+const handleOpen = () => console.log("V Connected to DB");
+const handleError = () => console.log(`X Error on DB connection: ${error}`);
+db.once("open", handleOpen); //한번만 실행
+db.on("error", handleError);

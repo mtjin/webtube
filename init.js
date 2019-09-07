@@ -1,5 +1,5 @@
-import  app from  "./app"; //app.js에서처럼 default로 export하면 이렇게 import할 수 있다.그에반해 router.js는 default가 아닌 userRouter로 export했으므로
-//그에맞는 이름으로 import해야함
+import "./db";
+import  app from  "./app"; //app.js에서 exprees()를 export한걸 받아서 사용한다.
 
 const PORT = 4000;
 

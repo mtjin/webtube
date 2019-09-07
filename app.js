@@ -1,5 +1,5 @@
-//const express = require('express'); //express import (프로젝트에서 express를 찾고 없으면  node_modules패키지에서 찾는다)
-import express from "express"; //위의 최신코드
+//const express = require('express'); //옛날코드
+import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
@@ -9,18 +9,20 @@ import userRouter from "./routers/userRouter"; //userRouter에서 export를 defa
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
 import routes from "./routes";
-const app = express();  //app변수를 선언해서 express실행
+const app = express();  // express
 
+//미들웨어
 app.use(helmet()); // 어플리케이션이 더안전하도록 만들어줌
 app.set("view engine", "pug"); //pug는 뷰엔진이다.
 app.use(cookieParser()); //cookie를 전달받아서 사용할 수 있도록 만들어주는 미들웨어
 app.use(bodyParser.json({extended: true})); //사용자가 웹사이트로 전달하는 정보들을 검사하는 미들웨어
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: true})); //json이 아닌 post형식으로올때 파서
 app.use(morgan("dev")); //어플리케이션에서 발생하는 모든 일들을 logging
 app.use(localsMiddleware);
 
-app.use(routes.home, globalRouter);
-app.use(routes.users, userRouter); //use는 누군가 /user경로로 접속하면 이 userRouter전체를 전체를 사용하겠다는 의미이다.
-app.use(routes.videos, videoRouter); // 이건 첫번쨰매배견수가 homt('/')과 다르게 videos로 되있다. 따라서 videos에 접근할려면 /videos/videos 이렇게 접근이 되는거다.
+//라우터
+app.use(routes.home, globalRouter);  //  localhost::4000/ 에 접속하면 글로벌라우터로 넘어간다.
+app.use(routes.users, userRouter); // localhost:4000/users/~~ 접속하면 유저라우터로 넘어간다.
+app.use(routes.videos, videoRouter); // localhost:4000/videos/~~ 에 접속하면 비디오라우터로 넘어간다.
 
-export default app; //app.js를 init.js에서 사용할 수 있게끔 export 해준다. , 누군가 이 파일을 불러올떄(import) app object를 주겠다는 의미이다.
+export default app; //다른 파일에서도 사용할 수 있게 export해준다.
